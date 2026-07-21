@@ -1,0 +1,136 @@
+{
+    "_comment": "GMR SMPLX->Unitree R1 IK config. Targets the URDF-DERIVED MJCF (legged_lab/assets/robots/r1/mjcf/R1.xml, produced by scripts/motion/convert_r1_urdf_to_mjcf.py) so the retarget robot == the trained robot (26 DoF: 12 legs, 2 waist, 10 arms, 2 head, wrist_roll-only). Body names are URDF link names (root 'pelvis_link', head 'head_yaw_link', hands '*_wrist_roll_link'). Schema: ik_match_table1/2, each robot_body -> [human_joint, pos_w, rot_w, pos_offset xyz, rot_offset quat wxyz]. Weights mirror smplx_to_tienkung.json. rot_offset quats are TienKung STARTING points — R1's frames are G1-derived, so cross-check smplx_to_g1.json and TUNE in vis_robot_motion.py until feet plant with no toe-in / penetration / sliding.",
+    "robot_root_name": "pelvis_link",
+    "human_root_name": "pelvis",
+    "ground_height": -0.05,
+    "human_height_assumption": 1.8,
+    "use_ik_match_table1": true,
+    "use_ik_match_table2": true,
+    "human_scale_table": {
+        "pelvis": 0.8,
+        "head": 0.8,
+        "spine3": 0.8,
+
+        "left_hip": 0.8,
+        "right_hip": 0.8,
+        "left_knee": 0.8,
+        "right_knee": 0.8,
+        "left_foot": 0.8,
+        "right_foot": 0.8,
+
+        "left_shoulder": 0.7,
+        "right_shoulder": 0.7,
+        "left_elbow": 0.7,
+        "right_elbow": 0.7,
+        "left_wrist": 0.7,
+        "right_wrist": 0.7
+    },
+    "ik_match_table1": {
+        "pelvis_link":             ["pelvis",          100, 10, [0.0, 0.0, 0.0],  [0.5, -0.5, -0.5, -0.5]],
+        "head_yaw_link":           ["head",              0, 10, [0.0, 0.0, 0.0],  [0.5, -0.5, -0.5, -0.5]],
+        "waist_roll_link":          ["spine3",            0, 10, [0.0, 0.0, 0.0],  [0.5, -0.5, -0.5, -0.5]],
+        "left_hip_roll_link":      ["left_hip",
+            0, 10, 
+            [0.0, 0.0, 0.0],  
+            [
+                0.4267755048530407,
+                -0.5637931078484661,
+                -0.5637931078484661,
+                -0.4267755048530407
+            ]
+        ],
+        "right_hip_roll_link":     ["right_hip",         
+            0, 10, 
+            [0.0, 0.0, 0.0],  
+            [
+                0.4267755048530407,
+                -0.5637931078484661,
+                -0.5637931078484661,
+                -0.4267755048530407
+            ]
+        ],
+        "left_knee_link":          ["left_knee",         0, 10, [0.0,   0.0, 0.0], [0.5, -0.5, -0.5, -0.5]],
+        "left_ankle_roll_link":    ["left_foot",       100, 10, [0.0,  0.0, 0.0], [0.5, -0.5, -0.5, -0.5]],
+        "right_knee_link":         ["right_knee",        0, 10, [0.0,   0.0, 0.0], [0.5, -0.5, -0.5, -0.5]],
+        "right_ankle_roll_link":   ["right_foot",      100, 10, [0.0, 0.0, 0.0], [0.5, -0.5, -0.5, -0.5]],
+
+        "left_shoulder_roll_link": ["left_shoulder",     
+            0, 10, 
+            [0.0, 0.0, 0.0],  
+            [
+                0.70710678,
+                0.0,
+                -0.70710678,
+                0.0
+            ]
+        ],
+        "right_shoulder_roll_link":["right_shoulder",    
+            0, 10, 
+            [0.0, 0.0, 0.0],  
+            [
+                0.0,
+                0.70710678,
+                0.0,
+                0.70710678
+            ]
+        ],
+        "left_elbow_link":         ["left_elbow",        0, 10, [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]],
+        "left_wrist_roll_link":    ["left_wrist",        0, 10, [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]],
+        "right_elbow_link":        ["right_elbow",       0, 10, [0.0, 0.0, 0.0], [0.0, 0.0, 0.0, -1.0]],
+        "right_wrist_roll_link":   ["right_wrist",       0, 10, [0.0, 0.0, 0.0], [0.0, 0.0, 0.0, -1.0]]
+    },
+    "ik_match_table2": {
+        "pelvis_link":             ["pelvis",          100, 5,  [0.0, 0.0, 0.0],  [0.5, -0.5, -0.5, -0.5]],
+        "head_yaw_link":           ["head",              10, 5, [0.0, 0.0, 0.0],  [0.5, -0.5, -0.5, -0.5]],
+        "waist_roll_link":          ["spine3",            10, 5, [0.0, 0.0, 0.0],  [0.5, -0.5, -0.5, -0.5]],
+        "left_hip_roll_link":      ["left_hip",
+            10, 5, 
+            [0.0, 0.0, 0.0],  
+            [
+                0.4267755048530407,
+                -0.5637931078484661,
+                -0.5637931078484661,
+                -0.4267755048530407
+            ]
+        ],
+        "right_hip_roll_link":     ["right_hip",         
+            10, 5, 
+            [0.0, 0.0, 0.0],  
+            [
+                0.4267755048530407,
+                -0.5637931078484661,
+                -0.5637931078484661,
+                -0.4267755048530407
+            ]
+        ],
+        "left_knee_link":          ["left_knee",         10, 5, [0.0,   0.0, 0.0], [ 0.5, -0.5, -0.5, -0.5]],
+        "left_ankle_roll_link":    ["left_foot",       100, 5,  [0.0,  0.02, 0.0], [-0.5,  0.5,  0.5,  0.5]],
+        "right_knee_link":         ["right_knee",        10, 5, [0.0,   0.0, 0.0], [ 0.5, -0.5, -0.5, -0.5]],
+        "right_ankle_roll_link":   ["right_foot",      100, 5,  [0.0, -0.02, 0.0], [-0.5,  0.5,  0.5,  0.5]],
+
+        "left_shoulder_roll_link": ["left_shoulder",     
+            10, 5, 
+            [0.0, 0.0, 0.0],  
+            [
+                0.70710678,
+                0.0,
+                -0.70710678,
+                0.0
+            ]
+        ],
+        "right_shoulder_roll_link":["right_shoulder",    
+            10, 5, 
+            [0.0, 0.0, 0.0],  
+            [
+                0.0,
+                0.70710678,
+                0.0,
+                0.70710678
+            ]
+        ],
+        "left_elbow_link":         ["left_elbow",        10, 5, [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]],
+        "left_wrist_roll_link":    ["left_wrist",        10, 5, [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]],
+        "right_elbow_link":        ["right_elbow",       10, 5, [0.0, 0.0, 0.0], [0.0, 0.0, 0.0, -1.0]],
+        "right_wrist_roll_link":   ["right_wrist",       10, 5, [0.0, 0.0, 0.0], [0.0, 0.0, 0.0, -1.0]]
+    }
+}
