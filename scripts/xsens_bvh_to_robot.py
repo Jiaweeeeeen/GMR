@@ -1,16 +1,17 @@
 import argparse
+import os
 import pathlib
 import time
-from general_motion_retargeting import GeneralMotionRetargeting as GMR
-from general_motion_retargeting import RobotMotionViewer
-from general_motion_retargeting.utils.xsens import load_xsens_file
+
+import numpy as np
 from rich import print
 from tqdm import tqdm
-import os
-import numpy as np
+
+from general_motion_retargeting import IK_CONFIG_DICT, RobotMotionViewer
+from general_motion_retargeting import GeneralMotionRetargeting as GMR
+from general_motion_retargeting.utils.xsens import load_xsens_file
 
 if __name__ == "__main__":
-
     HERE = pathlib.Path(__file__).parent
 
     parser = argparse.ArgumentParser()
@@ -24,12 +25,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--robot",
-        choices=[
-            "unitree_g1",
-            "unitree_h1_2",
-            "Q1",
-            "X1",
-        ],
+        choices=sorted(IK_CONFIG_DICT["bvh_xsens"]),
         default="unitree_h1_2",
     )
 
@@ -112,7 +108,7 @@ if __name__ == "__main__":
 
     # Load SMPLX trajectory
     # lafan1_data_frames, actual_human_height = load_lafan1_file(args.bvh_file)
-    lafan1_data_frames, actual_human_height,frame_time = load_xsens_file(args)
+    lafan1_data_frames, actual_human_height, frame_time = load_xsens_file(args)
 
     # Initialize the retargeting system
     retargeter = GMR(
@@ -121,7 +117,7 @@ if __name__ == "__main__":
         actual_human_height=actual_human_height,
     )
 
-    motion_fps = int(1/frame_time)
+    motion_fps = int(1 / frame_time)
 
     robot_motion_viewer = RobotMotionViewer(
         robot_type=args.robot,
@@ -147,7 +143,6 @@ if __name__ == "__main__":
     i = 0
 
     while i < len(lafan1_data_frames):
-
         # FPS measurement
         fps_counter += 1
         current_time = time.time()
